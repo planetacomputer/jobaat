@@ -1,0 +1,3 @@
+etif_front:
+    resource: "@EtifFrontBundle/Resources/config/routing.yml"
+    prefix:   /
