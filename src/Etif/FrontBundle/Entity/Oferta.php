@@ -3,6 +3,7 @@ namespace Etif\FrontBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Etif\FrontBundle\Entity\Usuario;
 
 /**
 *  @ORM\Table(name="oferta")
@@ -19,11 +20,14 @@ class Oferta{
 	*/
 	protected $id;
 
+    /** @ORM\OneToMany(targetEntity="OfertaUsuario", mappedBy="usuario") */
+    protected $usuarios;
 
 	public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->usuarios = new ArrayCollection();
     }
 
 	/**
@@ -349,5 +353,53 @@ class Oferta{
     public function getHorario()
     {
         return $this->horario;
+    }
+
+    /**
+     * Set usuarios
+     *
+     * @param \Etif\FrontBundle\Entity\Usuario $usuarios
+     *
+     * @return Oferta
+     */
+    public function setUsuarios(\Etif\FrontBundle\Entity\Usuario $usuarios = null)
+    {
+        $this->usuarios = $usuarios;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarios
+     *
+     * @return \Etif\FrontBundle\Entity\Usuario
+     */
+    public function getUsuarios()
+    {
+        return $this->usuarios;
+    }
+
+    /**
+     * Add usuario
+     *
+     * @param \Etif\FrontBundle\Entity\Usuario $usuario
+     *
+     * @return Oferta
+     */
+    public function addUsuario(\Etif\FrontBundle\Entity\Usuario $usuario)
+    {
+        $this->usuarios[] = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuario
+     *
+     * @param \Etif\FrontBundle\Entity\Usuario $usuario
+     */
+    public function removeUsuario(\Etif\FrontBundle\Entity\Usuario $usuario)
+    {
+        $this->usuarios->removeElement($usuario);
     }
 }

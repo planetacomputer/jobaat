@@ -3,6 +3,7 @@ namespace Etif\FrontBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Etif\FrontBundle\Entity\Oferta;
 
 /**
 *  @ORM\Table(name="usuario")
@@ -19,10 +20,14 @@ class Usuario{
 	*/
 	protected $id;
 
+    /** @ORM\OneToMany(targetEntity="OfertaUsuario", mappedBy="oferta") */
+    protected $ofertas;
+
 	public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->ofertas = new ArrayCollection();
     }
 
     /**
@@ -160,8 +165,9 @@ class Usuario{
 
 	/**
      * @var integer
-     *
+     * 
      * @ORM\Column(name="estudios_prim", type="smallint")
+     * EGB, ESO
      */
      protected $estudiosPrim;
 
@@ -169,6 +175,7 @@ class Usuario{
      * @var integer
      *
      * @ORM\Column(name="estudios_sec", type="smallint")
+     * Batxillerat, CFGM, CFGS
      */
      protected $estudiosSec;
 
@@ -199,6 +206,22 @@ class Usuario{
      * @ORM\Column(name="nivel_frances", type="smallint")
      */
      protected $nivelFrances;
+
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Assert\DateTime
+     */
+     private $createdAt;
+
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     * @Assert\DateTime
+     */
+     private $updatedAt;
 
     /**
      * Get id
@@ -712,5 +735,101 @@ class Usuario{
     public function getNivelFrances()
     {
         return $this->nivelFrances;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Usuario
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Usuario
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set ofertas
+     *
+     * @param \Etif\FrontBundle\Entity\Oferta $ofertas
+     *
+     * @return Usuario
+     */
+    public function setOfertas(\Etif\FrontBundle\Entity\Oferta $ofertas = null)
+    {
+        $this->ofertas = $ofertas;
+
+        return $this;
+    }
+
+    /**
+     * Get ofertas
+     *
+     * @return \Etif\FrontBundle\Entity\Oferta
+     */
+    public function getOfertas()
+    {
+        return $this->ofertas;
+    }
+
+    /**
+     * Add oferta
+     *
+     * @param \Etif\FrontBundle\Entity\Oferta $oferta
+     *
+     * @return Usuario
+     */
+    public function addOferta(\Etif\FrontBundle\Entity\Oferta $oferta)
+    {
+        $this->ofertas[] = $oferta;
+
+        return $this;
+    }
+
+    /**
+     * Remove oferta
+     *
+     * @param \Etif\FrontBundle\Entity\Oferta $oferta
+     */
+    public function removeOferta(\Etif\FrontBundle\Entity\Oferta $oferta)
+    {
+        $this->ofertas->removeElement($oferta);
     }
 }

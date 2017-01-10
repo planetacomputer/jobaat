@@ -21,6 +21,7 @@ class LoadEmpresaData extends AbstractFixture implements OrderedFixtureInterface
 			$empresa->setResponsable($faker->name);
 			$empresa->setSector($faker->words(1, true));
 			$empresa->setNumTrabajadores($faker->biasedNumberBetween(1, 5));
+			$empresa->setTelefono($faker->e164PhoneNumber);
 			$this->addReference('empresa'.$j, $empresa);
 
 			$manager->persist($empresa);
